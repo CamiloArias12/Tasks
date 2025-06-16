@@ -279,7 +279,7 @@ DELETE /comment/{id}
 ## 🏗️ Microservicios
 
 ### API Gateway (`apps/api-gateway`)
-- **Puerto**: 3000
+- **Puerto**: 4000
 - **Función**: Punto de entrada único, enrutamiento, autenticación
 - **Endpoints**: REST API públicos
 
