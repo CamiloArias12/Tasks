@@ -306,4 +306,8 @@ DELETE /comment/{id}
 
 ---
 
+## Usuario de prueba
+email admin@example.com
+password admin123
+
 ⭐ **¡Dale una estrella al repo si te fue útil!** ⭐
