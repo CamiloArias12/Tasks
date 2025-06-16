@@ -7,7 +7,7 @@
 ### Frontend
 - **Next.js 14** - Framework React con App Router
 - **TypeScript** - Tipado estático
-- **NextUI** - Componentes UI modernos
+- **HEROUI** - Componentes UI modernos
 - **Tailwind CSS** - Estilos utilitarios
 - **Jotai** - Gestión de estado
 - **React Hook Form** - Manejo de formularios
