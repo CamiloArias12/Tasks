@@ -1,0 +1,70 @@
+version: '3.9'
+
+services:
+  user-service-db:
+    image: postgres:17
+    ports:
+      - "${USER_DB_PORT}:5432"
+    environment:
+      POSTGRES_USER: ${USER_DB_USERNAME}
+      POSTGRES_PASSWORD: ${USER_DB_PASSWORD}
+      POSTGRES_HOST_USER_METHOD:  trust
+    env_file: "./.env"
+    volumes:
+      - ./apps/user/conf/postgres/:/docker-entrypoint-initdb.d/
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  project-service-db:
+    image: postgres:17
+    ports:
+      - "${PROJECT_DB_PORT}:5432"
+    environment:
+      POSTGRES_USER: ${PROJECT_DB_USERNAME}
+      POSTGRES_PASSWORD: ${PROJECT_DB_PASSWORD}
+      POSTGRES_HOST_USER_METHOD: trust
+    env_file: "./.env"
+    volumes:
+      - ./apps/projects/conf/postgres/:/docker-entrypoint-initdb.d/
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  task-service-db:
+    image: postgres:17
+    ports:
+      - "${TASK_DB_PORT}:5432"
+    environment:
+      POSTGRES_USER: ${TASK_DB_USERNAME}
+      POSTGRES_PASSWORD: ${TASK_DB_PASSWORD}
+      POSTGRES_HOST_USER_METHOD: trust
+    env_file: "./.env"
+    volumes:
+      - ./apps/task/conf/postgres/:/docker-entrypoint-initdb.d/
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  comment-service-db:
+    image: postgres:17
+    ports:
+      - "${COMMENT_DB_PORT}:5432"
+    environment:
+      POSTGRES_USER: ${COMMENT_DB_USERNAME}
+      POSTGRES_PASSWORD: ${COMMENT_DB_PASSWORD}
+      POSTGRES_HOST_USER_METHOD: trust
+    env_file: "./.env"
+    volumes:
+      - ./apps/comment/conf/postgres/:/docker-entrypoint-initdb.d/
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
