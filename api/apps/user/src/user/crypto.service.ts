@@ -10,10 +10,8 @@ import * as bcrypt from 'bcrypt';
 export class CryptoService {
   private readonly logger = new Logger(CryptoService.name);
   private readonly saltRounds: number;
-  // private readonly pepper: string;
 
   constructor(private readonly configService: ConfigService) {
-    // this.pepper = this.configService.get<string>('USER_PASSWORD_PAPPER');
     this.saltRounds = Number(
       this.configService.get<string>('USER_PASSWORD_SALT'),
     );

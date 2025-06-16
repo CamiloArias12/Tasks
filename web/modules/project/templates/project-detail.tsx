@@ -37,10 +37,8 @@ export default function ProjectDetail({ project, tasks =[], users = [], currentU
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [client] = useAtom(clientState);
 
-  // Estado para controlar la hidratación
   const [isClient, setIsClient] = useState(false);
 
-  // Estados para filtros
   const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '');
   const [selectedStatus, setSelectedStatus] = useState(searchParams.get('status') || '');
   const [selectedUserId, setSelectedUserId] = useState(searchParams.get('userId') || '');
@@ -68,7 +66,6 @@ export default function ProjectDetail({ project, tasks =[], users = [], currentU
     },
   });
 
-  // Función para actualizar la URL con los filtros
   const updateFilters = useCallback((filters: Record<string, string | number>) => {
     const params = new URLSearchParams(searchParams.toString());
 
@@ -80,7 +77,6 @@ export default function ProjectDetail({ project, tasks =[], users = [], currentU
       }
     });
 
-    // Resetear página cuando cambian los filtros (excepto cuando se cambia la página directamente)
     if (!filters.page) {
       params.set('page', '1');
       setCurrentPage(1);
@@ -89,7 +85,6 @@ export default function ProjectDetail({ project, tasks =[], users = [], currentU
     router.push(`?${params.toString()}`);
   }, [searchParams, router]);
 
-  // Handlers para los filtros
   const handleSearch = useCallback((value: string) => {
     setSearchTerm(value);
     updateFilters({
@@ -237,10 +232,8 @@ export default function ProjectDetail({ project, tasks =[], users = [], currentU
     return user?.name;
   };
 
-  // Usar currentUser en lugar de client atom para evitar problemas de hidratación
   const isAdmin = currentUser?.role === 'admin';
 
-  // Columnas de la tabla - siempre incluir actions column para evitar hidratación
   const taskColumns: TableColumnConfig[] = [
     {
       key: "title",

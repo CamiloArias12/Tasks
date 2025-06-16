@@ -8,7 +8,7 @@ import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
-    AuthModule, // Import AuthModule to get access to USER_SERVICE
+    AuthModule,
     ClientsModule.registerAsync([
       {
         name: SERVICE_LIST.TASK_SERVICE,

@@ -16,7 +16,7 @@ import { User } from './entities';
         password: configService.get('USER_DB_PASSWORD'),
         database: configService.get('USER_DB_NAME') || 'postgres',
         entities: [User],
-        migrations: ['src/database/migrations/*.ts'], // Changed from dist to src
+        migrations: ['src/database/migrations/*.ts'],
         migrationsRun: true,
         synchronize: true,
         logging: true,

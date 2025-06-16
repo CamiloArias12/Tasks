@@ -2,8 +2,6 @@ import {z} from 'zod';
 import {CommonActionState} from '../types/action';
 
 function formDataToObject(formData: FormData) {
-  // Converts FormData to a plain object.
-  // If there are multiple values for the same key in FormData, they are collected into an array.
   const entries: Record<string, any> = {};
 
   formData.forEach((v: any, k: string) => {

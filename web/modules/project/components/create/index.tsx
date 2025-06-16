@@ -37,11 +37,10 @@ export default function CreateProjectModal() {
   });
 
   const handleSubmit = (formData: FormData) => {
-    if (isSubmitting) return; // Prevenir envíos múltiples
+    if (isSubmitting) return;
     
     setIsSubmitting(true);
     
-    // Convertir las fechas al formato ISO
     const startDate = formData.get('startDate') as string;
     const endDate = formData.get('endDate') as string;
     

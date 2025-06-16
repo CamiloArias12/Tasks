@@ -97,7 +97,6 @@ export type TaskFormData = {
   assignedTo?: string;
 }
 
-// Validadores existentes para proyecto
 export const CreateProjectReqValidator = z.object({
   name: z.string().min(1, 'El nombre es obligatorio'),
   duration: z.preprocess(
@@ -124,7 +123,6 @@ export const DeleteProjectReqValidator = z.object({
 });
 
 
-// Nuevos validadores para tareas
 export const CreateTaskReqValidator = z.object({
   title: z.string().min(1, 'El título es obligatorio'),
   description: z.string().optional(),

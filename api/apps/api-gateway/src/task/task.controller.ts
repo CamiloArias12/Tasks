@@ -39,7 +39,6 @@ export class TaskController {
 
   @Get()
   async list(): Promise<SuccessResponse<TaskGetRes[]>> {
-    // Sin filtros, solo lista básica
     return await this.taskService.getAll();
   }
 
@@ -55,8 +54,8 @@ export class TaskController {
     @Query('limit') limit?: string,
     @Query('search') search?: string,
     @Query('status') status?: string,
-    @Query('userId') userId?: string, // UUID del usuario en el array users
-    @Query('dueDate') dueDate?: string, // YYYY-MM-DD format
+    @Query('userId') userId?: string,
+    @Query('dueDate') dueDate?: string,
     @Query('sortBy') sortBy?: string,
     @Query('sortOrder') sortOrder?: 'ASC' | 'DESC'
   ): Promise<SuccessResponse<{
@@ -71,8 +70,8 @@ export class TaskController {
       limit: limit ? parseInt(limit) : undefined,
       search,
       status,
-      userId, // UUID del usuario en el array users
-      projectId, // Se incluye automáticamente del parámetro
+      userId,
+      projectId,
       dueDate,
       sortBy,
       sortOrder,

@@ -6,7 +6,6 @@ export class SeedAdminUser1671234567893 implements MigrationInterface {
   name = 'SeedAdminUser1671234567893';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    // Check if admin user already exists
     const existingAdmin = await queryRunner.query(
       `SELECT * FROM "user" WHERE email = 'admin@example.com'`
     );
@@ -19,7 +18,6 @@ export class SeedAdminUser1671234567893 implements MigrationInterface {
     const adminId = uuidv4();
     const hashedPassword = await bcrypt.hash('admin123', 10);
 
-    // Insert admin user
     await queryRunner.query(`
       INSERT INTO "user" (id, name, email, hashed_password, role, created_at, updated_at)
       VALUES ($1, $2, $3, $4, $5, CURRENT_DATE, CURRENT_DATE)

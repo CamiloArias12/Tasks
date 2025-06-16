@@ -17,12 +17,11 @@ export function FormTask({ task, projectId, users = [] }: FormTaskProps) {
     { key: 'completed', label: 'Completada' },
   ];
 
-  // Función para convertir la fecha al formato YYYY-MM-DD para input type="date"
   const formatDateForInput = (dateString?: string) => {
     if (!dateString) return '';
     try {
       const date = new Date(dateString);
-      return date.toISOString().split('T')[0]; // Solo la parte de la fecha YYYY-MM-DD
+      return date.toISOString().split('T')[0];
     } catch (error) {
       console.error('Error formatting date:', error);
       return '';

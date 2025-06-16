@@ -48,20 +48,15 @@ export default function EditTaskModal({ task, users = [], children, onTaskUpdate
 
     setIsSubmitting(true);
 
-    // Agregar el ID de la tarea
     formData.set('id', task.id!);
 
-    // Convertir fecha si existe
     const dueDate = formData.get('dueDate') as string;
     if (dueDate) {
       formData.set('dueDate', new Date(dueDate).toISOString());
     }
 
-    // Manejar usuarios seleccionados del Select múltiple
     const users = formData.getAll('users') as string[];
-    // Limpiar el campo users original
     formData.delete('users');
-    // Agregar cada usuario como elemento del array
     users.forEach((user, index) => {
       formData.append(`users[${index}]`, user);
     });

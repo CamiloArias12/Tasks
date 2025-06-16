@@ -5,7 +5,7 @@ import DataTable, { TableColumnConfig } from '@/modules/common/components/table'
 import { UserRes } from '@/modules/dashboard/types';
 import CreateUserModal from '../components/create';
 import EditUserModal from '../components/edit';
-import { startTransition, useActionState, useState, useCallback } from 'react';
+import { startTransition, useActionState, useState, useCallback, useEffect } from 'react';
 import { deleteUserForm } from '../services/actions';
 import { useFormResponse } from '@/modules/common/hooks/use-form-response';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -27,15 +27,23 @@ export default function Users(props: UsersProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   
-  // Estados para filtros
-  const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '');
-  const [selectedRole, setSelectedRole] = useState(searchParams.get('role') || '');
-  const [currentPage, setCurrentPage] = useState(Number(searchParams.get('page')) || 1);
-  const [itemsPerPage, setItemsPerPage] = useState(Number(searchParams.get('limit')) || 10);
-  const [sortBy, setSortBy] = useState(searchParams.get('sortBy') || '');
-  const [sortOrder, setSortOrder] = useState<'ASC' | 'DESC'>(
-    (searchParams.get('sortOrder') as 'ASC' | 'DESC') || 'ASC'
-  );
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedRole, setSelectedRole] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [sortBy, setSortBy] = useState('');
+  const [sortOrder, setSortOrder] = useState<'ASC' | 'DESC'>('ASC');
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    setSearchTerm(searchParams.get('search') || '');
+    setSelectedRole(searchParams.get('role') || '');
+    setCurrentPage(Number(searchParams.get('page')) || 1);
+    setItemsPerPage(Number(searchParams.get('limit')) || 10);
+    setSortBy(searchParams.get('sortBy') || '');
+    setSortOrder((searchParams.get('sortOrder') as 'ASC' | 'DESC') || 'ASC');
+  }, [searchParams]);
 
   const [deleteResponse, deleteDispatch] = useActionState(deleteUserForm, {
     messages: [],
@@ -49,8 +57,9 @@ export default function Users(props: UsersProps) {
     },
   });
 
-  // Función para actualizar la URL con los filtros
   const updateFilters = useCallback((filters: Record<string, string | number>) => {
+    if (!mounted) return;
+    
     const params = new URLSearchParams(searchParams.toString());
     
     Object.entries(filters).forEach(([key, value]) => {
@@ -61,16 +70,14 @@ export default function Users(props: UsersProps) {
       }
     });
 
-    // Resetear página cuando cambian los filtros (excepto cuando se cambia la página directamente)
     if (!filters.page) {
       params.set('page', '1');
       setCurrentPage(1);
     }
 
     router.push(`?${params.toString()}`);
-  }, [searchParams, router]);
+  }, [searchParams, router, mounted]);
 
-  // Handlers para los filtros
   const handleSearch = useCallback((value: string) => {
     setSearchTerm(value);
     updateFilters({ search: value, role: selectedRole, limit: itemsPerPage });
@@ -133,6 +140,26 @@ export default function Users(props: UsersProps) {
       });
     }
   };
+
+  if (!mounted) {
+    return (
+      <div className='p-8'>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold">Gestión de Usuarios</h1>
+          <div className="w-32 h-10 bg-gray-200 rounded animate-pulse" />
+        </div>
+        <div className="bg-white p-4 rounded-lg border mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="h-10 bg-gray-200 rounded animate-pulse" />
+            <div className="h-10 bg-gray-200 rounded animate-pulse" />
+            <div className="h-10 bg-gray-200 rounded animate-pulse" />
+            <div className="h-10 bg-gray-200 rounded animate-pulse" />
+          </div>
+        </div>
+        <div className="bg-white rounded-lg border h-96 animate-pulse" />
+      </div>
+    );
+  }
 
   const columns: TableColumnConfig[] = [
     {
@@ -292,7 +319,6 @@ export default function Users(props: UsersProps) {
         </div>
       </div>
 
-      {/* Tabla */}
       <DataTable<UserRes>
         data={props.data}
         columns={columns}
@@ -320,7 +346,6 @@ export default function Users(props: UsersProps) {
               return item[columnKey as keyof UserRes];
           }
         }}
-        // Configuración de sorting
         sortDescriptor={{
           column: sortBy,
           direction: sortOrder.toLowerCase() as 'ascending' | 'descending'
@@ -332,7 +357,6 @@ export default function Users(props: UsersProps) {
         }}
       />
 
-      {/* Paginación */}
       {props.pagination && props.pagination.totalPages > 1 && (
         <div className="flex justify-center items-center gap-2 mt-6">
           <Button

@@ -43,17 +43,13 @@ export default function CreateTaskModal({ projectId, users = [], onTaskCreated }
     
     setIsSubmitting(true);
     
-    // Convertir fecha a formato ISO datetime
     const dueDate = formData.get('dueDate') as string;
     if (dueDate) {
       formData.set('dueDate', new Date(dueDate).toISOString());
     }
     
-    // Manejar usuarios seleccionados del Select múltiple
     const users = formData.getAll('users') as string[];
-    // Limpiar el campo users original
     formData.delete('users');
-    // Agregar cada usuario como elemento del array
     users.forEach((user, index) => {
       formData.append(`users[${index}]`, user);
     });

@@ -23,7 +23,6 @@ export default function CommentsChat({ task, currentUser, onClose, users }: Comm
   const [editText, setEditText] = useState("");
   const [isMinimized, setIsMinimized] = useState(false);
 
-  // Server actions
   const [commentsResponse, commentsDispatch] = useActionState(getCommentsByTaskAction, {
     messages: [],
     errors: [],
@@ -45,12 +44,10 @@ export default function CommentsChat({ task, currentUser, onClose, users }: Comm
     errors: [],
   });
 
-  // Cargar comentarios al montar el componente
   useEffect(() => {
     loadComments();
   }, []);
 
-  // Manejar respuesta de obtener comentarios
   useEffect(() => {
     if (commentsResponse.data) {
       setIsLoading(false);
@@ -60,7 +57,6 @@ export default function CommentsChat({ task, currentUser, onClose, users }: Comm
     }
   }, [commentsResponse]);
 
-  // Manejar respuesta de crear comentario
   useFormResponse({
     response: createResponse,
     onEnd: () => {
@@ -70,7 +66,6 @@ export default function CommentsChat({ task, currentUser, onClose, users }: Comm
     },
   });
 
-  // Manejar respuesta de actualizar comentario
   useFormResponse({
     response: updateResponse,
     onEnd: () => {
@@ -80,7 +75,6 @@ export default function CommentsChat({ task, currentUser, onClose, users }: Comm
     },
   });
 
-  // Manejar respuesta de eliminar comentario
   useFormResponse({
     response: deleteResponse,
     onEnd: () => {

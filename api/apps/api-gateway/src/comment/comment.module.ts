@@ -8,7 +8,7 @@ import { CommentController } from './comment.controller';
 
 @Module({
   imports: [
-    AuthModule, // Import AuthModule to get access to USER_SERVICE
+    AuthModule,
     ClientsModule.registerAsync([
       {
         name: SERVICE_LIST.COMMENT_SERVICE,

@@ -9,7 +9,6 @@ export enum ROLES {
 }
 
 export enum REGISTER_ROLE {
-  // TODO: Find a way to create enum with number and use zod to received string and convert to int
   USER = '1',
   ADMIN = '2',
 }

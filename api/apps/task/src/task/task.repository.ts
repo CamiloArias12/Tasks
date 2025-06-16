@@ -58,7 +58,6 @@ export class TaskRepository {
         query.andWhere('task.status = :status', { status: filters.status });
       }
   
-      // Filtrar por usuario en el array users
       if (filters?.userId) {
         query.andWhere(':userId = ANY(task.users)', { userId: filters.userId });
       }

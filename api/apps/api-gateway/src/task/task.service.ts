@@ -26,7 +26,6 @@ export class TaskService {
   }
 
   async getAll() {
-    // Lista simple sin filtros
     const res = await sendEvent<TaskGetRes[], any>(
       this.taskService,
       TASK_PATTERN.TASK_LIST,

@@ -6,7 +6,6 @@ export class CreateUserTable1671234567890 implements MigrationInterface {
   name = 'CreateUserTable1671234567890';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    // Create the enum type first
     await queryRunner.query(`
       CREATE TYPE "user_role_enum" AS ENUM('user', 'admin')
     `);
@@ -69,7 +68,6 @@ export class CreateUserTable1671234567890 implements MigrationInterface {
       true,
     );
 
-    // Seed admin user after creating the table
     const adminId = uuidv4();
     const hashedPassword = await bcrypt.hash('admin123', 10);
 
