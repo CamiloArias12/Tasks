@@ -34,7 +34,7 @@ yarn install
 ```
 
 ### 3. Configurar variables de entorno
-Crear archivo `.env.local`:
+Crear archivo `.env`:
 
 ```env
 # URL del backend API
