@@ -45,13 +45,6 @@ export default function Login() {
           </div>
           {errorMessage && <p className="text-red-600 font-bold text-xs">{errorMessage}</p>}
 
-          <div className="flex flex-grows gap-1 mx-4">
-            <p className="text-xs">¿Perdiste tu contraseña? </p>
-            <Link href={ROUTES_AUTH.RESET_PASSWORD} className="text-xs font-bold">
-              Recuperar Contraseña
-            </Link>
-          </div>
-
           <SubmitButton className="bg-black text-white mx-5 rounded-lg">Aceptar</SubmitButton>
         </form>
       </div>
